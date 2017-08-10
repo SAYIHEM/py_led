@@ -1,6 +1,8 @@
 import time
 
 from neopixel import *
+import rpi_ws281x as ws
+
 
 # LED strip configuration:
 from Controller import *
@@ -13,7 +15,7 @@ LED_DMA = 5  # DMA channel to use for generating signal (try 5)
 LED_BRIGHTNESS = 255  # Set to 0 for darkest and 255 for brightest
 LED_INVERT = False  # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL = 0  # set to '1' for GPIOs 13, 19, 41, 45 or 53
-LED_STRIP = ws.WS2811_STRIP_GRB  # Strip type and colour ordering
+LED_STRIP = ws.WS2812_STRIP  # Strip type and colour ordering
 
 
 # Define functions which animate LEDs in various ways.
