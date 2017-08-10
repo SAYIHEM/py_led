@@ -1,14 +1,10 @@
-# NeoPixel library strandtest example
-# Author: Tony DiCola (tony@tonydicola.com)
-#
-# Direct port of the Arduino NeoPixel library strandtest example.  Showcases
-# various animations on a strip of NeoPixels.
 import time
 
 from neopixel import *
-from PixelController import PixelController
 
 # LED strip configuration:
+from Controller import *
+
 LED_COUNT = 194  # Number of LED pixels.
 LED_PIN = 18  # GPIO pin connected to the pixels (18 uses PWM!).
 # LED_PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
@@ -103,7 +99,7 @@ def lowlight(strip):
 def shoot(strip, iterations = 3):
     clear_pixels(strip)
     for n in range(1, iterations, 1):
-        for i in range(0, strip.numPixels(), 1):
+        for i in range(0, strip.numPixels(), 2):
             strip.setPixelColorRGB(i, 255, 255, 0)
             if i >= 1:
                 strip.setPixelColorRGB(i - 1, 212, 212, 0)
@@ -117,8 +113,9 @@ def shoot(strip, iterations = 3):
                 strip.setPixelColorRGB(i - 5, 42, 42, 0)
             if i >= 6:
                 strip.setPixelColorRGB(i - 6, 0, 0, 0)
+            if i >= 7:
+                strip.setPixelColorRGB(i - 7, 0, 0, 0)
             strip.show()
-            #time.sleep(0.00001)
 
 def clear_pixels(strip):
     for i in range(0, strip.numPixels(), 1):
@@ -127,44 +124,12 @@ def clear_pixels(strip):
 
 
 
-# Main program logic follows:
-if __name__ == '__main__':
-    # Create NeoPixel object with appropriate configuration.
-    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL,
-                              LED_STRIP)
-    # Intialize the library (must be called once before other functions).
-    strip.begin()
-
-    # print('Press Ctrl-C to quit.')
-    # while True:
-    #     print('Starting animation.')
-    #     #lowlight(strip)
-    #     shoot(strip, 10)
-    #     #ping_pong(strip)
-    #     time.sleep(3)
-
-    print('Starting animation.')
-    controller = PixelController(194)
-    for i in range(256):
-        controller.set_pixel(0, 255, 255, 255)
-        time.sleep(0.1)
-    ##strip.set_pixel(1, 255, 255, 255)
-    #controller.change_brightness(25, -200)
-    # lowlight(strip)
-    #shoot(strip, 10)
-    # ping_pong(strip)
-    time.sleep(3)
+#if __name__ == '__main__':
+# Create NeoPixel object with appropriate configuration.
+strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL,
+                          LED_STRIP)
+# Intialize the library (must be called once before other functions).
+strip.begin()
+shoot(strip, 5000)
 
 
-
-        # colorWipe(strip, Color(255, 0, 0))  # Red wipe
-        #colorWipe(strip, Color(0, 255, 0))  # Blue wipe
-        # colorWipe(strip, Color(0, 0, 255))  # Green wipe
-        # print('Theater chase animations.')
-        # theaterChase(strip, Color(127, 127, 127))  # White theater chase
-        # theaterChase(strip, Color(127, 0, 0))  # Red theater chase
-        # theaterChase(strip, Color(0, 0, 127))  # Blue theater chase
-        # print('Rainbow animations.')
-        # rainbow(strip)
-        # rainbowCycle(strip)
-        # theaterChaseRainbow(strip)
