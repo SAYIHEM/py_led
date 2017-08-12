@@ -1,4 +1,4 @@
-import neopixel
+from neopixel import *
 import rpi_ws281x as ws
 from Pixel import *
 from PixelGroup import *
@@ -44,14 +44,7 @@ class Controller(object):
         # Start LED control
         self.STRIP.begin()
 
-        group = PixelGroup(self.STRIP, [Pixel(None, 1), Pixel(None, 2)])
-        group.add_pixel(Pixel(None, 5))
-        group.delete_pixel(Pixel(None, 1))
-        print(group.PIXEL_GROUP)
-
-
-
-    # Getter & Setter #
+    # Getter & Setter
     def pixel_count(self):
         return self.LED_COUNT
 
@@ -68,8 +61,11 @@ class Controller(object):
                 color[i] = color[i] + value
         self.STRIP.setPixelColorRGB(pixel, color)
 
-    def set_pixel(self, pixel, r, g, b):
+    def setPixelRGB(self, pixel, r, g, b):
         self.STRIP.setPixelColorRGB(pixel, r, g, b)
+
+    def setPixel(self, pixel, color):
+        self.STRIP.setPixelColor(pixel, color)
 
     def show(self):
         self.STRIP.show()
