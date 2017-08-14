@@ -44,22 +44,24 @@ def swipe_smooth():
             controller.show()
 
 
-def swipe_smooth_rainbow():
+def swipe_smooth_rainbow(start, end):
     k = 0
 
     colors = []
     for j in range(0, 194):
-        colors.append(colorsys.hsv_to_rgb(j / 194.0, 1, 1))
+        colors.append(colorsys.hsv_to_rgb(abs(start + end - 1.0)/194.0 * j + start, 1, 1))
 
     while True:
         k += 1
         for y in range(0, 194):
-            controller.setPixelRGB((k + y) % 194, int(colors[y][0] * 255), int(colors[y][1] * 255), int(colors[y][2] * 255))
+            index = (y + k) % 194
+            controller.setPixelRGB(index, int(colors[y][0] * 255), int(colors[y][1] * 255), int(colors[y][2] * 255))
         controller.show()
+        time.sleep(0.05)
 
 
 #swipe_thru_every_color()
-swipe_smooth_rainbow()
+swipe_smooth_rainbow(0.01, 0.6)
 #swipe_smooth()
 #time.sleep(5)
 while True:
